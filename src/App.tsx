@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "./components/login-page";
-import UserRegistration from "./components/registration";
-import EventPage from "./components/event-page";
+import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import LandingPage from "./components/landing-page";
 
 const darkTheme = createTheme({
   palette: {
@@ -13,25 +11,12 @@ const darkTheme = createTheme({
 });
 
 function App() {
-  const [userId, setUserId] = useState(-1);
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <div className="App">
         <BrowserRouter>
-          <Routes>
-            <Route
-              path="/"
-              element={<Login userId={userId} setUserId={setUserId} />}
-            />
-            <Route
-              path="/register"
-              element={
-                <UserRegistration userId={userId} setUserId={setUserId} />
-              }
-            />
-            <Route path="/events*" element={<EventPage userId={userId} />} />
-          </Routes>
+          <LandingPage />
         </BrowserRouter>
       </div>
     </ThemeProvider>

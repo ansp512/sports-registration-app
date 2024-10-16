@@ -20,30 +20,26 @@ export interface ComponentProps {
 }
 
 const UserRegistration: React.FC<ComponentProps> = (props: ComponentProps) => {
-
   const [name, setName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const handleRegister = async () => {
     ApiService.registerUser(name)
-    .then(result => {
-      setErrorMessage("");
-      ApiService.validateUser(name)
-      .then(
-        res=> {
-          props.setUserId(res?.data?.user_id);
-          navigate("/events?userId="+res?.data?.user_id);        } 
-      )
-      .catch(err => {
-        setErrorMessage(err?.response?.data?.detail);
-  
+      .then((result) => {
+        setErrorMessage("");
+        ApiService.validateUser(name)
+          .then((res) => {
+            props.setUserId(res?.data?.user_id);
+            navigate("/events?userId=" + res?.data?.user_id);
+          })
+          .catch((err) => {
+            setErrorMessage(err?.response?.data?.detail);
+          });
       })
-    })
-    .catch(err => {
-      setErrorMessage(err?.response?.data?.detail);
-
-    })
+      .catch((err) => {
+        setErrorMessage(err?.response?.data?.detail);
+      });
   };
 
   return (
@@ -77,7 +73,9 @@ const UserRegistration: React.FC<ComponentProps> = (props: ComponentProps) => {
                 />
               </Grid2>
             </Grid2>
-                { errorMessage?.length ? <Alert severity="error">{errorMessage}</Alert> : null}
+            {errorMessage?.length ? (
+              <Alert severity="error">{errorMessage}</Alert>
+            ) : null}
             <Button
               fullWidth
               variant="contained"
