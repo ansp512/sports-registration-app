@@ -1,25 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Login from "./components/login-page";
+import UserRegistration from "./components/registration";
+import EventPage from "./components/event-page";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
 
 function App() {
+  const [userId, setUserId] = useState(-1);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <div className="App">
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/"
+              element={<Login userId={userId} setUserId={setUserId} />}
+            />
+            <Route
+              path="/register"
+              element={
+                <UserRegistration userId={userId} setUserId={setUserId} />
+              }
+            />
+            <Route path="/events*" element={<EventPage userId={userId} />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </ThemeProvider>
   );
 }
 
